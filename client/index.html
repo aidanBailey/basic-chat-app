@@ -24,36 +24,49 @@
     
 
     <div id="mainContent" class="container-fluid">
-        <!-- <div id="grandparent">
-            <div id="parent">
-            <div>
-            Tasty
-            </div>
-            <div>
-            Tasty
-            </div>
-            <div>
-            Tasty
-            </div>
-            <div>
-            Tasty
-            </div>
-            <div>
-            Tasty
-            </div>
-            </div>
-            </div> -->
 
       <div class="row h-100">
-        <div id="messagesDisplay" class="col-9 h-100">
-            <div id="messages" class="h-100">
-              <div>Test1</div>
-              <div>Test2</div>
-              <div>Test3</div>
+        <div id="messagesDisplayContainer" class="col-9 h-100">
+            <div id="messagesDisplay">
+                <div id="messages">
+                  <div class="message text-left">
+                    <div class="textContainer" style="background: #04a519">
+                        <span class="name">Octopus</span>
+                        <span class="messageText">How's it going bro?</span>
+                        <span class="timestamp">2:35PM</span>
+                    </div>
+                  </div>
+                  <div class="message text-right">
+                    <div class="textContainer" style="background: #9b4600">
+                      <span class="timestamp">2:37PM</span>
+                      <span class="messageText">Not too bad!</span>
+                    </div> 
+                  </div>
+                  <div class="message text-right">
+                    <div class="textContainer" style="background: #9b4600">
+                      <span class="timestamp">2:38PM</span>
+                      <span class="messageText">Having trouble with this assignment though!</span>
+                    </div> 
+                  </div>
+                  <div class="message text-left">
+                    <div class="textContainer" style="background: #04a519">
+                        <span class="name">Octopus</span>
+                        <span class="messageText">Lol you suck dude!</span>
+                        <span class="timestamp">2:39PM</span>
+                    </div>
+                  </div>
+                  <div class="message text-left">
+                      <div class="textContainer" style="background: #9352e9">
+                          <span class="name">Eel</span>
+                          <span class="messageText">Haha</span>
+                          <span class="timestamp">2:45PM</span>
+                      </div>
+                    </div>
+                </div>
             </div>
           </div>
             
-          <div id="activeUsersDisplay" class="col h-100 container-fluid">
+          <div id="activeUsersDisplay" class="col-3 h-100 container-fluid">
             <div class="row">
               <div class="col">
                 <h2 class="text-center">Active Users</h2>
@@ -64,13 +77,14 @@
                 <ul id="activeUsers" class="list-group">
                   <li class="list-group-item">Octopus</li>
                   <li class="list-group-item">Eel</li>
-                  <li class="list-group-item">Seahorse</li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Seahorse <span class="badge badge-secondary badge-pill">You</span>
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
       </div>
-      
 
     </div>
 

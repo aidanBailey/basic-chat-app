@@ -68,13 +68,9 @@ h1 {
     min-width: 200px;
 }
 
-#messagesDisplay{
+#messagesDisplayContainer{
     background: #75B9BE;
     border-right: 3px solid #FAC9B8;
-    height: calc(100vh - 140px);
-    width: 70vw;
-    display: table-cell;
-    vertical-align: bottom;
 }
 
 #activeUsersDisplay{
@@ -86,10 +82,42 @@ h1 {
     max-height: calc(100vh - 190px);
 }
 
-#messages {
-    max-width: 70vw;
+#messagesDisplay {
+    width: 75vw;
     height: calc(100vh - 140px);
+    display: table-cell;
+    vertical-align: bottom;
+}
+  
+#messages {
+    max-width: 75vw;
+    max-height: calc(100vh - 140px);
     overflow-y: auto;
+}
+
+.message {
+    margin-bottom: 3vh;
+    border-radius: 5px;
+}
+
+.textContainer {
+    border-radius: 5px;
+    display: inline-block;
+    padding: 10px;
+}
+
+.textContainer span {
+    padding: 3px;
+
+}
+
+.name {
+    font-weight: bold;
+}
+
+.timestamp {
+    color: gray;
+    font-style: italic;
 }
 
 @media (max-width: 825px){
@@ -105,43 +133,3 @@ h1 {
         padding-top: 20px;
     }
 }
-
-/* grandparent {
-    width: 30px;
-    height: 30px;
-    display: table-cell;
-    vertical-align: bottom;
-}
-
-parent {
-    max-width: 30px;
-    max-height: 30px;
-    overflow-y: scroll;
-} */
-
-#testParent {
-    height: 60vh;
-    width: 30vw;
-    display: table-cell;
-    vertical-align: bottom;
-}
-
-#testChild {
-    max-height: 60vh;
-    max-width: 30vw;
-    overflow: scroll;
-}
-
-#grandparent {
-    background: yellow;
-    width: 300px;
-    height: 300px;
-    display: table-cell;
-    vertical-align: bottom;
-  }
-  
-  #parent {
-    max-width: 300px;
-    max-height: 300px;
-    overflow-y: auto;
-  }
