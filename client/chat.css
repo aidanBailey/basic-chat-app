@@ -1,11 +1,6 @@
 * { 
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-body { 
-    font: 13px Helvetica, Arial;
 }
 
 form {
@@ -14,6 +9,7 @@ form {
     position: fixed;
     bottom: 0; 
     width: 100%; 
+    height: 50px;
 }
 
 form input { 
@@ -43,3 +39,109 @@ form button {
 #messages li:nth-child(odd) { 
     background: #eee; 
 }
+
+#fishLogo {
+    width: 200px;
+    height: auto;
+    margin-top: -3%;
+}
+
+header {
+    background: #A40E4C;
+    height: 90px;
+    border-bottom: 3px solid #FAC9B8;
+}
+
+h1 {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 475%;
+    color: rgb(92, 128, 182);
+    padding-left: 15px;
+}
+
+#mainContent {
+    height: calc(100vh - 140px);
+    border-bottom: 4px solid #FAC9B8;
+}
+
+#logoDiv {
+    min-width: 200px;
+}
+
+#messagesDisplay{
+    background: #75B9BE;
+    border-right: 3px solid #FAC9B8;
+    height: calc(100vh - 140px);
+    width: 70vw;
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+#activeUsersDisplay{
+    background: #8DA7BE;
+}
+
+.scrollableContent {
+    overflow: auto;
+    max-height: calc(100vh - 190px);
+}
+
+#messages {
+    max-width: 70vw;
+    height: calc(100vh - 140px);
+    overflow-y: auto;
+}
+
+@media (max-width: 825px){
+    h1 {
+        font-size: 350%;
+        padding-top: 10px;
+    }
+}
+
+@media (max-width: 680px){
+    h1 {
+        font-size: 250%;
+        padding-top: 20px;
+    }
+}
+
+/* grandparent {
+    width: 30px;
+    height: 30px;
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+parent {
+    max-width: 30px;
+    max-height: 30px;
+    overflow-y: scroll;
+} */
+
+#testParent {
+    height: 60vh;
+    width: 30vw;
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+#testChild {
+    max-height: 60vh;
+    max-width: 30vw;
+    overflow: scroll;
+}
+
+#grandparent {
+    background: yellow;
+    width: 300px;
+    height: 300px;
+    display: table-cell;
+    vertical-align: bottom;
+  }
+  
+  #parent {
+    max-width: 300px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
