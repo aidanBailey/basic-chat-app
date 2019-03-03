@@ -1,43 +1,42 @@
 * { 
     margin: 0;
     padding: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 form {
-    background: #000;
-    padding: 3px;
+    background: #464655;
     position: fixed;
     bottom: 0; 
     width: 100%; 
     height: 50px;
+    border-top: 4px solid #FAC9B8;
 }
 
-form input { 
-    border: 0;
-    padding: 10px; 
-    width: 90%; 
-    margin-right: .5%; 
+form input {
+    border-radius: 10px;
+    width: calc(100vw - 170px); 
+    height: 100%;
+    border: none;
+    margin-left: 5px;
+    text-indent: 10px; 
 }
 
 form button { 
-    width: 9%; 
-    background: rgb(130, 224, 255); 
+    width: 150px; 
+    background: rgb(165, 53, 100); 
     border: none; 
-    padding: 10px; 
+    height: 100%;
+    border-radius: 5px;
+    color: rgb(212, 212, 212);
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
-#messages { 
-    list-style-type: none; 
-    margin: 0; 
-    padding: 0; 
-}
-
-#messages li { 
-    padding: 5px 10px;
-}
-
-#messages li:nth-child(odd) { 
-    background: #eee; 
+.formContainer {
+    height:80%;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 #fishLogo {
@@ -47,7 +46,7 @@ form button {
 }
 
 header {
-    background: #A40E4C;
+    background: #464655;
     height: 90px;
     border-bottom: 3px solid #FAC9B8;
 }
@@ -55,13 +54,20 @@ header {
 h1 {
     font-family: 'Reenie Beanie', cursive;
     font-size: 475%;
-    color: rgb(92, 128, 182);
+    color: rgb(165, 53, 100); 
     padding-left: 15px;
+}
+
+#activeUsersDisplay h2 {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 2.5vw;
+    color: rgb(71, 71, 71); 
+    font-weight: 500;
 }
 
 #mainContent {
     height: calc(100vh - 140px);
-    border-bottom: 4px solid #FAC9B8;
+    
 }
 
 #logoDiv {
@@ -71,10 +77,15 @@ h1 {
 #messagesDisplayContainer{
     background: #75B9BE;
     border-right: 3px solid #FAC9B8;
+    padding-right: 0px;
 }
 
 #activeUsersDisplay{
     background: #8DA7BE;
+}
+
+#activeUsersCol {
+    height: 77vh;
 }
 
 .scrollableContent {
@@ -98,6 +109,7 @@ h1 {
 .message {
     margin-bottom: 3vh;
     border-radius: 5px;
+    margin-right: 1vw;
 }
 
 .textContainer {
@@ -120,6 +132,29 @@ h1 {
     font-style: italic;
 }
 
+input.messageBox:focus {
+    outline-width: 0;
+}
+
+/* Scrollbar Style for Webkit Browsers */
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+::-webkit-scrollbar-track {
+    background: #ffffff00; 
+}
+
+::-webkit-scrollbar-thumb {
+background: #888;
+border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #555; 
+}
+
+/* Media Queries */ 
 @media (max-width: 825px){
     h1 {
         font-size: 350%;

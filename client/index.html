@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Weird Fishes Messenger</title>
-    <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie|Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href = "chat.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -24,7 +24,6 @@
     
 
     <div id="mainContent" class="container-fluid">
-
       <div class="row h-100">
         <div id="messagesDisplayContainer" class="col-9 h-100">
             <div id="messagesDisplay">
@@ -56,12 +55,78 @@
                     </div>
                   </div>
                   <div class="message text-left">
+                    <div class="textContainer" style="background: #9352e9">
+                        <span class="name">Eel</span>
+                        <span class="messageText">Haha</span>
+                        <span class="timestamp">2:45PM</span>
+                    </div>
+                  </div>
+                  <div class="message text-left">
+                      <div class="textContainer" style="background: #04a519">
+                          <span class="name">Octopus</span>
+                          <span class="messageText">How's it going bro?</span>
+                          <span class="timestamp">2:35PM</span>
+                      </div>
+                    </div>
+                    <div class="message text-right">
+                      <div class="textContainer" style="background: #9b4600">
+                        <span class="timestamp">2:37PM</span>
+                        <span class="messageText">Not too bad!</span>
+                      </div> 
+                    </div>
+                    <div class="message text-right">
+                      <div class="textContainer" style="background: #9b4600">
+                        <span class="timestamp">2:38PM</span>
+                        <span class="messageText">Having trouble with this assignment though!</span>
+                      </div> 
+                    </div>
+                    <div class="message text-left">
+                      <div class="textContainer" style="background: #04a519">
+                          <span class="name">Octopus</span>
+                          <span class="messageText">Lol you suck dude!</span>
+                          <span class="timestamp">2:39PM</span>
+                      </div>
+                    </div>
+                    <div class="message text-left">
                       <div class="textContainer" style="background: #9352e9">
                           <span class="name">Eel</span>
                           <span class="messageText">Haha</span>
                           <span class="timestamp">2:45PM</span>
                       </div>
                     </div>
+                    <div class="message text-left">
+                        <div class="textContainer" style="background: #04a519">
+                            <span class="name">Octopus</span>
+                            <span class="messageText">How's it going bro?</span>
+                            <span class="timestamp">2:35PM</span>
+                        </div>
+                      </div>
+                      <div class="message text-right">
+                        <div class="textContainer" style="background: #9b4600">
+                          <span class="timestamp">2:37PM</span>
+                          <span class="messageText">Not too bad!</span>
+                        </div> 
+                      </div>
+                      <div class="message text-right">
+                        <div class="textContainer" style="background: #9b4600">
+                          <span class="timestamp">2:38PM</span>
+                          <span class="messageText">Having trouble with this assignment though!</span>
+                        </div> 
+                      </div>
+                      <div class="message text-left">
+                        <div class="textContainer" style="background: #04a519">
+                            <span class="name">Octopus</span>
+                            <span class="messageText">Lol you suck dude!</span>
+                            <span class="timestamp">2:39PM</span>
+                        </div>
+                      </div>
+                      <div class="message text-left">
+                        <div class="textContainer" style="background: #9352e9">
+                            <span class="name">Eel</span>
+                            <span class="messageText">Haha</span>
+                            <span class="timestamp">2:45PM</span>
+                        </div>
+                      </div>
                 </div>
             </div>
           </div>
@@ -73,8 +138,48 @@
               </div>
             </div>
             <div class="row scrollableContent">
-              <div class="col">
+              <div id="activeUsersCol" class="col">
                 <ul id="activeUsers" class="list-group">
+                  <li class="list-group-item">Octopus</li>
+                  <li class="list-group-item">Eel</li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Seahorse <span class="badge badge-secondary badge-pill">You</span>
+                  </li>
+                  <li class="list-group-item">Octopus</li>
+                  <li class="list-group-item">Eel</li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Seahorse <span class="badge badge-secondary badge-pill">You</span>
+                  </li>
+                  <li class="list-group-item">Octopus</li>
+                  <li class="list-group-item">Eel</li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Seahorse <span class="badge badge-secondary badge-pill">You</span>
+                  </li>
+                  <li class="list-group-item">Octopus</li>
+                  <li class="list-group-item">Eel</li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Seahorse <span class="badge badge-secondary badge-pill">You</span>
+                  </li>
+                  <li class="list-group-item">Octopus</li>
+                  <li class="list-group-item">Eel</li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Seahorse <span class="badge badge-secondary badge-pill">You</span>
+                  </li>
+                  <li class="list-group-item">Octopus</li>
+                  <li class="list-group-item">Eel</li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Seahorse <span class="badge badge-secondary badge-pill">You</span>
+                  </li>
+                  <li class="list-group-item">Octopus</li>
+                  <li class="list-group-item">Eel</li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Seahorse <span class="badge badge-secondary badge-pill">You</span>
+                  </li>
+                  <li class="list-group-item">Octopus</li>
+                  <li class="list-group-item">Eel</li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Seahorse <span class="badge badge-secondary badge-pill">You</span>
+                  </li>
                   <li class="list-group-item">Octopus</li>
                   <li class="list-group-item">Eel</li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -89,7 +194,11 @@
     </div>
 
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <div class="formContainer">
+        <input id="m" class="messageBox" autocomplete="off" placeholder="Type a message..."/>
+        <button>Send</button>
+      </div>
+      
     </form>
   </body>
 </html>
