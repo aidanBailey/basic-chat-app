@@ -93,6 +93,10 @@ h1 {
     max-height: calc(100vh - 190px);
 }
 
+.list-group-item {
+    border-width: 2px;
+}
+
 #messagesDisplay {
     width: 75vw;
     height: calc(100vh - 140px);
