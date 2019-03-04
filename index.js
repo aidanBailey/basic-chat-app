@@ -1,31 +1,60 @@
+/*
+* Server Setup Vars
+*/
 let express = require('express');
 let app = express();
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
-let nicknames = [
-    "Seahorse",
-    "Octopus",
-    "Squid",
-    "Tuna",
-    "Carp",
-    "Great White",
-    "Hammerhead",
-    "Starfish",
-    "Pufferfish",
-    "Swordfish",
-    "Sea Snake",
-    "Angler",
-    "Sea Turtle",
-    "Rainbow Trout",
-    "Eel",
-    "Clown Fish",
-    "Blue Tang",
-    "Beserker Minnow",
-    "Salmon",
-    "Trout"
-];
 
-let usedNicknames = [];
+/*
+* Program Variables
+*/
+let nicknameGenerator = function(){
+    let nicknames = [
+        "Seahorse",
+        "Octopus",
+        "Squid",
+        "Tuna",
+        "Carp",
+        "Great White",
+        "Hammerhead",
+        "Starfish",
+        "Pufferfish",
+        "Swordfish",
+        "Sea Snake",
+        "Angler",
+        "Sea Turtle",
+        "Rainbow Trout",
+        "Eel",
+        "Clown Fish",
+        "Blue Tang",
+        "Beserker Minnow",
+        "Salmon",
+        "Trout"
+    ];
+    let nicknamesInUse = [];
+
+    function transferNickname(){
+        let name = nicknames.pop();
+        nicknamesInUse.push(name);
+        return name; 
+    }
+
+    return {
+        generateNickname: function(){
+            if(nicknames.length > 0){
+                return transferNickname();
+            }
+            else{
+                nicknames = nicknamesInUse.slice();
+                nicknamesInUse = [];
+                return transferNickname();
+            }
+        }
+    }
+}();
+let currentUsers = {};
+let messageHistory = [];
 
 app.use(express.static(__dirname + "/client"));
 
@@ -39,7 +68,7 @@ http.listen(3000, function(){
 
 io.on('connection', function(socket){
     let nickname;
-    let color;
+    let messageCounter = 0;
 
     // This color generator function based on code written by StackOverflow user "Anatoliy"
     // https://stackoverflow.com/questions/1484506/random-color-generator
@@ -51,21 +80,29 @@ io.on('connection', function(socket){
         return tempColor;
     }
 
-    socket.on('nicknameAndColorRequest', function(){
-        console.log("nickname and color requested");
-        nickname = "tasty boi!"; // TODO Replace this with a nickname generator 
-        color = getRandomColor();
-        socket.emit('nicknameAndColor', nickname, color);
-        console.log("Nickname sent: " + nickname);
+    socket.on('setupRequest', function(){
+        console.log("A new client has sent a setup request...");
+        nickname = nicknameGenerator.generateNickname(); 
+        let color = getRandomColor();
+        socket.emit('setupMessageWithNickname', nickname, color, currentUsers, messageHistory);
+        currentUsers[nickname] = color;
+        console.log("Setup Message sent; nickname = " + nickname + " , color = " + color);
     });
 
-    socket.on('colorRequest', function(clientNickname){
-        console.log("received nickname from client; nickname = " + clientNickname);
+    socket.on('setupRequestExistingNickname', function(clientNickname){
+        console.log(clientNickname + " has sent a setup request...");
         nickname = clientNickname;
-        console.log("color requested");
-        color = getRandomColor();
-        socket.emit('color', color);
-        console.log("Color Sent: " + color);
+        let color = getRandomColor();
+        socket.emit('setupMessageNoNickname', color, currentUsers, messageHistory);
+        console.log("messages sent to user");
+        for(let message of messageHistory){
+            console.log("messageID: " 
+            + message.messageID + ", nickname: " + message.nickname 
+            + ", color: " + message.color + ", message: " + message.message 
+            + ", timestamp: " + message.timestamp);
+        }
+        currentUsers[nickname] = color;
+        console.log("Setup Message sent; nickname = " + nickname + " , color = " + color);
     });
 
     socket.on('disconnect', function(){
@@ -73,7 +110,26 @@ io.on('connection', function(socket){
     });
 
     socket.on('chat message', function(msg){
-        console.log('message: ' + msg);
-        io.emit('chat message', msg);
+        // Create the message object and add it to the dictionary
+        let message = {
+            messageID: nickname + messageCounter++,
+            nickname: nickname, 
+            color: currentUsers[nickname], 
+            message: msg, 
+            timestamp: new Date().toLocaleTimeString()};
+        messageHistory.push(message);
+        
+        console.log('Received message; nickname: ' + nickname + ', color: ' 
+            + currentUsers[nickname] + ', messsage: ' + msg);
+        
+        console.log("messages in history");
+        for(let message of messageHistory){
+            
+            console.log("messageID: " 
+            + message.messageID + ", nickname: " + message.nickname 
+            + ", color: " + message.color + ", message: " + message.message 
+            + ", timestamp: " + message.timestamp);
+        }
+        io.emit('chat message', message);
     });
 });
