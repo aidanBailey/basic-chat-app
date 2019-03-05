@@ -140,6 +140,15 @@ input.messageBox:focus {
     outline-width: 0;
 }
 
+.alert {
+    position: fixed;
+    top: 7%;
+    left: 10%;
+    z-index: 1;
+    width: 80vw;
+    display: none;
+}
+
 /* Scrollbar Style for Webkit Browsers */
 ::-webkit-scrollbar {
     width: 10px;

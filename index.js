@@ -82,10 +82,17 @@ io.on('connection', function(socket){
 
     socket.on('setupRequest', function(){
         console.log("A new client has sent a setup request...");
-        nickname = nicknameGenerator.generateNickname(); 
+        while(true){
+            nickname = nicknameGenerator.generateNickname(); 
+            if(!(nickname in currentUsers)){
+                break;
+            }
+                
+        }
         let color = getRandomColor();
         socket.emit('setupMessageWithNickname', nickname, color, currentUsers, messageHistory);
         currentUsers[nickname] = color;
+        socket.broadcast.emit('new user', nickname, color);
         console.log("Setup Message sent; nickname = " + nickname + " , color = " + color);
     });
 
@@ -102,11 +109,8 @@ io.on('connection', function(socket){
             + ", timestamp: " + message.timestamp);
         }
         currentUsers[nickname] = color;
+        socket.broadcast.emit('new user', nickname, color);
         console.log("Setup Message sent; nickname = " + nickname + " , color = " + color);
-    });
-
-    socket.on('disconnect', function(){
-        console.log('user disconnected');
     });
 
     socket.on('chat message', function(msg){
@@ -131,5 +135,24 @@ io.on('connection', function(socket){
             + ", timestamp: " + message.timestamp);
         }
         io.emit('chat message', message);
+    });
+
+    socket.on('user change', function(newNickname, newColor) {
+        delete currentUsers[nickname];
+        currentUsers[newNickname] = newColor;
+        for(let message of messageHistory){
+            if(message.nickname === nickname){
+                message.nickname = newNickname;
+                message.color = newColor;
+            }
+        }
+        io.emit('user change', nickname, newNickname, newColor);
+        nickname = newNickname;
+    });
+
+    socket.on('disconnect', function(){
+        console.log(nickname + " has disconnected");
+        delete currentUsers[nickname];
+        io.emit('user disconnect', nickname);
     });
 });
