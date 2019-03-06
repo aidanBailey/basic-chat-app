@@ -5,12 +5,12 @@
 }
 
 form {
-    background: #464655;
+    background: #363641;
     position: fixed;
     bottom: 0; 
     width: 100%; 
     height: 50px;
-    border-top: 4px solid #FAC9B8;
+    border-top: 2px solid rgb(134, 206, 173);
 }
 
 form input {
@@ -24,7 +24,7 @@ form input {
 
 form button { 
     width: 150px; 
-    background: rgb(165, 53, 100); 
+    background: #95190C; 
     border: none; 
     height: 100%;
     border-radius: 5px;
@@ -46,22 +46,22 @@ form button {
 }
 
 header {
-    background: #464655;
+    background: #363641;
     height: 90px;
-    border-bottom: 3px solid #FAC9B8;
+    border-bottom: 2px solid rgb(134, 206, 173);
 }
 
 h1 {
     font-family: 'Reenie Beanie', cursive;
     font-size: 475%;
-    color: rgb(165, 53, 100); 
+    color: #95190C; 
     padding-left: 15px;
 }
 
 #activeUsersDisplay h2 {
-    font-family: 'Reenie Beanie', cursive;
+    font-family: 'Raleway', sans-serif;
     font-size: 2.5vw;
-    color: rgb(71, 71, 71); 
+    color: #F1FFFA; 
     font-weight: 500;
 }
 
@@ -75,13 +75,15 @@ h1 {
 }
 
 #messagesDisplayContainer{
-    background: #75B9BE;
-    border-right: 3px solid #FAC9B8;
+    background-image: url("chat-wallpaper.jpg");
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+    border-right: 2px solid rgb(134, 206, 173);
     padding-right: 0px;
 }
 
 #activeUsersDisplay{
-    background: #8DA7BE;
+    background: rgb(56, 87, 114);
 }
 
 #activeUsersCol {
