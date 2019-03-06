@@ -57,7 +57,7 @@ $(function (){
             textContainerDiv.append('<span class="timestamp">' + message.timestamp + '</span>');
         }
         
-        // $("#elementID").scrollDown
+        $("#messages").animate({ scrollTop: $('#messages').prop("scrollHeight")}, 1000);
     }
 
     function handleAlert(alertMessage) {
@@ -108,13 +108,12 @@ $(function (){
         // Set Cookie for Nickname
         let date = new Date();
         date.setTime(date.getTime() + (60*60*1000));
-        document.cookie = "nickname=" + nickname + ";" + date;
+        document.cookie = "nickname=" + nickname + ";expires=" + date.toUTCString();
 
         setupClient(sentColor, currentUsers, messageHistory);
     });
 
     socket.on('setupMessageNoNickname', function(sentColor, currentUsers, messageHistory){
-        // TODO Update Expiry Date for existing cookie
         setupClient(sentColor, currentUsers, messageHistory);
     });
 
@@ -132,8 +131,17 @@ $(function (){
 
     socket.on('user change', function(oldNickname, newNickname, newColor){
         // Change Active Users List entry
-        $("#" + oldNickname.replace(/\s/g, "_") + '_activeUser').html(newNickname 
-            + "<span class='badge badge-secondary badge-pill'>You</span>");
+        if(oldNickname === nickname){
+            nickname = newNickname;
+            $("#" + oldNickname.replace(/\s/g, "_") + '_activeUser').html(newNickname 
+                + "<span class='badge badge-secondary badge-pill'>You</span>");
+            let date = new Date();
+            date.setTime(date.getTime() + (60*60*1000));
+            document.cookie = "nickname=" + newNickname + ";expires=" + date.toUTCString();
+        }
+        else{
+            $("#" + oldNickname.replace(/\s/g, "_") + '_activeUser').html(newNickname);
+        }
         $("#" + oldNickname.replace(/\s/g, "_") + '_activeUser').css('border-color', newColor);
         $("#" + oldNickname.replace(/\s/g, "_") + '_activeUser').attr('id', newNickname.replace(/\s/g, "_") + '_activeUser');
 
@@ -156,13 +164,12 @@ $(function (){
                 handleAlert("Specified nickname is empty... please try again");
             else {
                 socket.emit('user change', newNickname, color);
-                nickname = newNickname;
             }
         }
         else if ($('#m').val().slice(0,'/nickcolor '.length).includes('/nickcolor ')){
             // Verify nickname color is valid
             let newColor = $('#m').val().slice('/nickcolor '.length);
-            if(newColor.length > 6 || newColor.length === 0)
+            if(newColor.length > 8 || newColor.length === 0)
                 handleAlert("Specified hex color is an invalid length... please try again");
             else if (!(/[0-9A-Fa-f]{6}/g.test(newColor)))
                 handleAlert("Specified color is not in a valid hex format... please try again");
