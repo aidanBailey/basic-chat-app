@@ -33,10 +33,24 @@ let nicknameGenerator = function(){
         "Trout"
     ];
     let nicknamesInUse = [];
+    let generateCount = 0;
 
     function transferNickname(){
-        let name = nicknames.pop();
-        nicknamesInUse.push(name);
+        let name = 'Weird Fish';
+        while(true){
+            name = nicknames.pop();
+            nicknamesInUse.push(name); 
+            if(!(name in currentUsers)){
+                break;
+            }
+            else if(generateCount > 20){
+                name = 'Weird Fish' + String(Math.floor(Math.random() * (1 - 1000)) + 1);
+            }
+            else{
+                generateCount++;
+            }
+        }
+        generateCount = 0;
         return name; 
     }
 
@@ -56,6 +70,10 @@ let nicknameGenerator = function(){
 let currentUsers = {};
 let messageHistory = [];
 
+/*
+* Server Setup
+*/
+
 app.use(express.static(__dirname + "/client"));
 
 app.get('/', function(req, res){
@@ -65,6 +83,10 @@ app.get('/', function(req, res){
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
+
+/*
+* Websocket Communication and Server Logic
+*/ 
 
 io.on('connection', function(socket){
     let nickname;
@@ -82,13 +104,7 @@ io.on('connection', function(socket){
 
     socket.on('setupRequest', function(){
         console.log("A new client has sent a setup request...");
-        while(true){
-            nickname = nicknameGenerator.generateNickname(); 
-            if(!(nickname in currentUsers)){
-                break;
-            }
-                
-        }
+        nickname = nicknameGenerator.generateNickname();
         let color = getRandomColor();
         socket.emit('setupMessageWithNickname', nickname, color, currentUsers, messageHistory);
         currentUsers[nickname] = color;
@@ -138,6 +154,11 @@ io.on('connection', function(socket){
     });
 
     socket.on('user change', function(newNickname, newColor) {
+        if(newNickname !== nickname && (newNickname in currentUsers)){
+            socket.emit('user change denied', 'New nickname already in use... please try again');
+            return;
+        }
+        
         delete currentUsers[nickname];
         currentUsers[newNickname] = newColor;
         for(let message of messageHistory){

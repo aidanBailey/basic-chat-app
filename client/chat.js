@@ -6,7 +6,7 @@ $(function (){
     function setupClient(setupColor, activeUsers, messageHistory){
         // Set client's nickname and color
         color = setupColor;
-        $("#activeUsers").append("<li id='" + nickname + "_activeUser' class='list-group-item d-flex justify-content-between align-items-center' style='border-color:" 
+        $("#activeUsers").append("<li id='" + nickname.replace(/\s/g, "_") + "_activeUser' class='list-group-item d-flex justify-content-between align-items-center' style='border-color:" 
             + color +"'>" + nickname + "<span class='badge badge-secondary badge-pill'>You</span></li>");
 
         // Set Active Users
@@ -15,20 +15,15 @@ $(function (){
         }
 
         // Set Message History
-        for(let message of messageHistory){
-            console.log("Message from message history; messageID: " 
-            + message.messageID + ", nickname: " + message.nickname 
-            + ", color: " + message.color + ", message: " + message.message 
-            + ", timestamp: " + message.timestamp); 
+        for(let message of messageHistory)
             setMessage(message);
-        }
     }
 
     function setUser(userNickname, userColor){
         if(userNickname === nickname)
             return;
 
-        $("#activeUsers").append("<li id='" + userNickname + "_activeUser' class='list-group-item' style='border-color:" 
+        $("#activeUsers").append("<li id='" + userNickname.replace(/\s/g, "_") + "_activeUser' class='list-group-item' style='border-color:" 
             + userColor +"'>" + userNickname + "</li>");
     }
 
@@ -36,7 +31,7 @@ $(function (){
         let messageDiv = $('<div></div>');
         $("#messages").append(messageDiv);
         messageDiv.attr('id', message.messageID);
-        messageDiv.addClass(message.nickname + 'Message');
+        messageDiv.addClass(message.nickname.replace(/\s/g, "_") + 'Message');
 
         if(message.nickname === nickname){
             // Append message to the right
@@ -76,12 +71,14 @@ $(function (){
     }
 
     function changePrevMessages(oldNickname, newNickname, newColor){
-        let messagesToChangeColor = $('.' + oldNickname + 'Message');
+        let messagesToChangeColor = $('.' + oldNickname.replace(/\s/g, "_") + 'Message');
         let textContainers = messagesToChangeColor.find('.textContainer');
         textContainers.css('background', newColor);
 
-        let messagesToChangeName = $('.text-left.'+ oldNickname + 'Message');
+        let messagesToChangeName = $('.text-left.' + oldNickname.replace(/\s/g, "_") + 'Message');
         messagesToChangeName.find('.textContainer').find('.name').html(newNickname);
+        messagesToChangeName.removeClass(oldNickname.replace(/\s/g, "_") + 'Message');
+        messagesToChangeName.addClass(newNickname.replace(/\s/g, "_") + 'Message');
     }
 
     /*
@@ -95,14 +92,10 @@ $(function (){
         }).length) {
             // Cookie exists (and therefore client has a pre-existing nickname)
             nickname = document.cookie.replace(/(?:(?:^|.*;\s*)nickname\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-            console.log("Browser cookie found; nickname = " + nickname);
-            console.log("Sending setup request with existing nickname");
             socket.emit('setupRequestExistingNickname', nickname);
         }
         else {
             // No cookie (or pre-existing nickname) 
-            console.log("No Browser Cookie found");
-            console.log("Sending setup request");
             socket.emit('setupRequest');
         }
     });
@@ -126,10 +119,6 @@ $(function (){
     });
 
     socket.on('chat message', function(message){
-        console.log("Received message from the server; messageID: " 
-            + message.messageID + ", nickname: " + message.nickname 
-            + ", color: " + message.color + ", message: " + message.message 
-            + ", timestamp: " + message.timestamp);
         setMessage(message);
     });
 
@@ -138,19 +127,22 @@ $(function (){
     });
 
     socket.on('user disconnect', function(userNickname){
-        $('#' + userNickname + '_activeUser').remove();
+        $('#' + userNickname.replace(/\s/g, "_") + '_activeUser').remove();
     });
 
     socket.on('user change', function(oldNickname, newNickname, newColor){
-        console.log("User Change Request; oldNickname: " + oldNickname + ", newNickname: " + newNickname + ", newColor: " + newColor );
-
         // Change Active Users List entry
-        $("#" + oldNickname + '_activeUser').html(newNickname);
-        $("#" + oldNickname + '_activeUser').css('border-color', newColor);
-        $("#" + oldNickname + '_activeUser').attr('id', newNickname + '_activeUser');
+        $("#" + oldNickname.replace(/\s/g, "_") + '_activeUser').html(newNickname 
+            + "<span class='badge badge-secondary badge-pill'>You</span>");
+        $("#" + oldNickname.replace(/\s/g, "_") + '_activeUser').css('border-color', newColor);
+        $("#" + oldNickname.replace(/\s/g, "_") + '_activeUser').attr('id', newNickname.replace(/\s/g, "_") + '_activeUser');
 
         // Change old messages
         changePrevMessages(oldNickname, newNickname, newColor);
+    });
+
+    socket.on('user change denied', function(serverMessage){
+        handleAlert(serverMessage);
     });
 
     $('form').submit(function(e){
