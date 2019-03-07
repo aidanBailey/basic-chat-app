@@ -125,10 +125,10 @@ io.on('connection', function(socket){
         else{
             color = getRandomColor();
             instanceCounts[nickname] = 1;
+            socket.broadcast.emit('new user', nickname, color);
         }
         socket.emit('setupMessageNoNickname', color, currentUsers, messageHistory);
         currentUsers[nickname] = color;
-        socket.broadcast.emit('new user', nickname, color);
         console.log("Setup Message sent; nickname = " + nickname + " , color = " + color);
     });
 
@@ -187,5 +187,9 @@ io.on('connection', function(socket){
             return;
         }
         instanceCounts[nickname]--;
+    });
+
+    socket.on('nickname changed', function(newNickname){
+        nickname = newNickname;
     });
 });

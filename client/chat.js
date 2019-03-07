@@ -139,6 +139,7 @@ $(function (){
             let date = new Date();
             date.setTime(date.getTime() + (60*60*1000));
             document.cookie = "nickname=" + newNickname + ";expires=" + date.toUTCString();
+            socket.emit('nickname changed', newNickname);
         }
         else{
             $("#" + oldNickname.replace(/\s/g, "_") + '_activeUser').html(newNickname);
