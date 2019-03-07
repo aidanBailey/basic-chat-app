@@ -201,7 +201,7 @@ background: #555;
 
 @media (max-width: 680px){
     h1 {
-        font-size: 250%;
+        font-size: 6.5vw;
         padding-top: 20px;
     }
 }
