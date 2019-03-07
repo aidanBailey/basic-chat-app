@@ -57,7 +57,7 @@ $(function (){
             textContainerDiv.append('<span class="timestamp">' + message.timestamp + '</span>');
         }
         
-        $("#messages").animate({ scrollTop: $('#messages').prop("scrollHeight")}, 1000);
+        $("#messages").scrollTop($('#messages').prop("scrollHeight"));
     }
 
     function handleAlert(alertMessage) {
@@ -71,14 +71,15 @@ $(function (){
     }
 
     function changePrevMessages(oldNickname, newNickname, newColor){
-        let messagesToChangeColor = $('.' + oldNickname.replace(/\s/g, "_") + 'Message');
-        let textContainers = messagesToChangeColor.find('.textContainer');
+        let messagesToChange = $('.' + oldNickname.replace(/\s/g, "_") + 'Message');
+        let textContainers = messagesToChange.find('.textContainer');
         textContainers.css('background', newColor);
 
         let messagesToChangeName = $('.text-left.' + oldNickname.replace(/\s/g, "_") + 'Message');
         messagesToChangeName.find('.textContainer').find('.name').html(newNickname);
-        messagesToChangeName.removeClass(oldNickname.replace(/\s/g, "_") + 'Message');
-        messagesToChangeName.addClass(newNickname.replace(/\s/g, "_") + 'Message');
+        
+        messagesToChange.removeClass(oldNickname.replace(/\s/g, "_") + 'Message');
+        messagesToChange.addClass(newNickname.replace(/\s/g, "_") + 'Message');
     }
 
     /*
