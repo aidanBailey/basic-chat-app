@@ -68,6 +68,7 @@ let nicknameGenerator = function(){
     }
 }();
 let currentUsers = {};
+let instanceCounts = {};
 let messageHistory = [];
 
 /*
@@ -108,6 +109,7 @@ io.on('connection', function(socket){
         let color = getRandomColor();
         socket.emit('setupMessageWithNickname', nickname, color, currentUsers, messageHistory);
         currentUsers[nickname] = color;
+        instanceCounts[nickname] = 1;
         socket.broadcast.emit('new user', nickname, color);
         console.log("Setup Message sent; nickname = " + nickname + " , color = " + color);
     });
@@ -115,15 +117,16 @@ io.on('connection', function(socket){
     socket.on('setupRequestExistingNickname', function(clientNickname){
         console.log(clientNickname + " has sent a setup request...");
         nickname = clientNickname;
-        let color = getRandomColor();
-        socket.emit('setupMessageNoNickname', color, currentUsers, messageHistory);
-        console.log("messages sent to user");
-        for(let message of messageHistory){
-            console.log("messageID: " 
-            + message.messageID + ", nickname: " + message.nickname 
-            + ", color: " + message.color + ", message: " + message.message 
-            + ", timestamp: " + message.timestamp);
+        let color;
+        if(clientNickname in currentUsers){
+            color = currentUsers[clientNickname];
+            instanceCounts[clientNickname]++;
         }
+        else{
+            color = getRandomColor();
+            instanceCounts[nickname] = 1;
+        }
+        socket.emit('setupMessageNoNickname', color, currentUsers, messageHistory);
         currentUsers[nickname] = color;
         socket.broadcast.emit('new user', nickname, color);
         console.log("Setup Message sent; nickname = " + nickname + " , color = " + color);
@@ -172,8 +175,13 @@ io.on('connection', function(socket){
     });
 
     socket.on('disconnect', function(){
-        console.log(nickname + " has disconnected");
-        delete currentUsers[nickname];
-        io.emit('user disconnect', nickname);
+        if(instanceCounts[nickname] <= 1){
+            console.log(nickname + " has disconnected");
+            delete currentUsers[nickname];
+            delete instanceCounts[nickname];
+            io.emit('user disconnect', nickname);
+            return;
+        }
+        instanceCounts[nickname]--;
     });
 });
