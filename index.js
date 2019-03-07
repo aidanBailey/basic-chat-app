@@ -164,6 +164,10 @@ io.on('connection', function(socket){
         
         delete currentUsers[nickname];
         currentUsers[newNickname] = newColor;
+
+        let instanceCount = instanceCounts[nickname];
+        delete instanceCounts[nickname];
+        instanceCounts[newNickname] = instanceCount;
         for(let message of messageHistory){
             if(message.nickname === nickname){
                 message.nickname = newNickname;
